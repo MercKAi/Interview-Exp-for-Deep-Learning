@@ -94,7 +94,10 @@ $$
 
 - #### cv::Mat中数据内存的排列顺序是HWC（numpy.array也是HWC）
 
-    假设图像是RGB存储(cv::mat是bgr)，对于图像中的第一个像素，先存储R通道的值，紧接着是这个像素的G通道值，然后是B通道值。接着是图像中第二个像素的RGB值，依此类推(torch需要的是chw因此需要transpose)
+<p style="margin-left: 40px;">
+&nbsp; &nbsp; &nbsp; &nbsp;假设图像是RGB存储(cv::mat是bgr)，对于图像中的第一个像素，先存储R通道的值，紧接着是这个像素的G通道值，然后是B通道值。接着是图像中第二个像素的RGB值，依此类推(torch需要的是chw因此需要transpose)
+</p>
+  
 
 <br>
 <br>
