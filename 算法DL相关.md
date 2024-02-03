@@ -97,7 +97,21 @@ $$
 <p style="margin-left: 40px;">
 &nbsp; &nbsp; &nbsp; &nbsp;假设图像是RGB存储(cv::mat是bgr)，对于图像中的第一个像素，先存储R通道的值，紧接着是这个像素的G通道值，然后是B通道值。接着是图像中第二个像素的RGB值，依此类推(torch需要的是chw因此需要transpose)
 </p>
-  
+
+- #### C++中opencv的mat是怎么深拷贝、浅拷贝的？（调用什么函数）
+   - 浅拷贝：浅拷贝可以通过简单地使用赋值操作符来完成-复制头信息和增加引用计数
+
+     `cv::Mat ori; cv::Mat shallowCopy = original;`
+
+   - 深拷贝：深拷贝会复制 Mat对象的数据和头信息，生成一个完全独立的副本
+      1. 使用 ’**clone()‘** ：`cv::Mat deepCopy = original.clone();`
+
+      2. 使用 ‘**copyTo() ’** ：`cv::Mat deepCopy; original.copyTo(deepCopy);`
+
+   - ’**clone()‘** 和 **‘copyTo() ’**的区别：
+      1. `clone`得到mat对象将拥有与原始对象完全相同的数据，但是在内存中的位置是完全独立的(相当于直接返回新的对象)。 `copyTo`则需要一个已存在的 Mat对象作为目标。
+      2. `copyTo()` 提供了通过掩码进行条件复制的能力，而 `clone()` 总是复制整个矩阵(复杂程度copyto > clone)
+
 
 <br>
 <br>
