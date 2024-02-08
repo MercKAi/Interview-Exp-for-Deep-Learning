@@ -87,6 +87,48 @@ $$
    - 迁移学习：预训练模型为起点，可以相对减少数据集不足的影响
    - 特征处理：针对训练目标对输入的数据进行合适的预处理
 
+- #### 手写NMS代码
+
+```python
+def NMS(boxes, scores, iou_threshold):
+  areas = [(box[2] - box[0]) * (box[3] - box[0]) for box in boxes]
+  indices = sorted(range(len(boxes)), key=lambda i: scores[i], reverse=True)
+  select_indices = []
+  while indices:
+      current = indices.pop(0) # score最高box的indice
+      select_indices.append(current)
+      ious = []
+      for idx in indices:
+          inter_x1 = max(boxes[current][0], boxes[idx][0])
+          inter_y1 = min(boxes[current][1], boxes[idx][1])
+          inter_x2 = min(boxes[current][2], boxes[idx][2])
+          inter_y2 = max(boxes[current][3], boxes[idx][3])
+          inter_area = max(0,(inter_x2 - inter_x1)) * max(0, (inter_y2 - inter_y2))
+          out_area = areas[current] + areas[idx] - inter_area
+          iou = inter_area / out_area
+          ious.append(iou)
+      indices = [idx for idx, iou in zip(indices, ious) if iou <= iou_threshold] # 移除iou大于threshold的index
+  return select_indices
+```
+
+- #### 手写conv代码
+
+```python
+import numpy as np
+def conv2d(input_feature_map, kernel, stride, padding):
+    input_padded_map = np.pad(input_feature_map, padding, mode='constant', constant_values=0)
+    input_height, input_width = input_padded_map.shape
+    kernel_height, kernel_width = kernel.shape
+    out_height = （(input_height - kernel_height) // stride） + 1
+    out_width = (input_width - kernel_width) // stride + 1
+    out_feature_map = np.zero((out_height, out_width))
+    for i in range(0, out_height):
+        for j in range(0, out_width):
+            current_window = input_padded_map[i*stride:i*stride+kernel_width, j*stride:j*stride+kernel_height]
+            out_feature_map[i,j] = np.sum(current_window * kernel)# @矩阵相乘 *元素相乘
+    return out_feature_map
+```
+
 <br>
 <br>
 
