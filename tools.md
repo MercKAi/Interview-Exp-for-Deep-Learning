@@ -46,4 +46,9 @@
 - #### 远程操作
    - `git push` 用于将本地分支的更新推送到远程仓库
    - `git pull` 是将远程仓库获取最新的更改并自动尝试合并到当前分支-相当于`git fetch + git merge`
-
+- #### 如果发现主干中有BUG怎么处理
+   - 创建一个新的分支进行bug修复:
+      - git checkout main, git pull, git checkout fix321
+      - git add.  ,  git commit"fix done"
+      - git checkout main, git pull, git merge fix321
+      - git push origin(远程仓库的本地别名) main
