@@ -159,7 +159,7 @@ def conv2d(input_feature_map, kernel, stride, padding):
 
       2. 使用 ‘**copyTo() ’** ：`cv::Mat deepCopy; original.copyTo(deepCopy);`
 
-   - ’**clone()‘** 和 **‘copyTo() ’**的区别：
+   - ’**clone()‘** 和 ’**copyTo()‘** 的区别：
       1. `clone`得到mat对象将拥有与原始对象完全相同的数据，但是在内存中的位置是完全独立的(相当于直接返回新的对象)。 `copyTo`则需要一个已存在的 Mat对象作为目标。
       2. `copyTo()` 提供了通过掩码进行条件复制的能力，而 `clone()` 总是复制整个矩阵(复杂程度copyto > clone)
 
